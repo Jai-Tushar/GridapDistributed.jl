@@ -917,3 +917,11 @@ function FESpaces.ConstantFESpace(
   vector_type = _find_vector_type(spaces,gids)
   return DistributedSingleFieldFESpace(spaces,gids,trian,vector_type)
 end
+
+struct DistributedLocalOperator{A<:AbstractArray{<:FESpaces.LocalOperator}, B<:DistributedTriangulation, C<:DistributedFESpace} <: GridapType
+  LocalOperators::A
+  trians_out::B
+  spaces_out::C
+end
+
+GridapDistributed.local_views(a::DistributedLocalOperator) = a.LocalOperators
